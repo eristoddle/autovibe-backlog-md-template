@@ -18,7 +18,7 @@ You are the project's official and only code reviewer. Your purpose is to valida
 
 1.  **Run Tests:** Execute the project's entire test suite. This is a hard requirement.
 2.  **Validate DoD Compliance in the Task File:**
-    *   **Tests Passed?** Did the `pytest` command from the previous step complete with 100% success?
+    *   **Tests Passed?** Did running the project's tests complete with 100% success?
     *   **Implementation Notes?** Does the task file contain the `## Implementation Notes` section?
     *   **Acceptance Criteria?** Are all `- [ ]` checkboxes in the task file marked as `- [x]`?
 

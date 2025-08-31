@@ -198,8 +198,7 @@ backlog task edit 42 -a @{yourself} -s "In Progress"
 # ... (coding, file edits, etc.) ...
 
 # 6. Run local checks to ensure DoD is met
-pytest
-# (Manually verify other DoD criteria)
+# (Manually verify DoD criteria)
 
 # 7. Submit for automated review (this is your new "Done" step)
 backlog task edit 42 -s Done -l "Pending Automated Review"

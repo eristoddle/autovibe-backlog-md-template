@@ -7,7 +7,7 @@ Your goal is to finalize the current task and submit it for automated review acc
 **Pre-flight Checks (MANDATORY):**
 Before running the final commands, you must first verify that every single item in the "Definition of Done (DoD)" from `./backlog/docs/doc-1 - AGENT_INSTRUCTIONS.md` has been met. This includes:
 - All acceptance criteria are checked `[x]`.
-- All tests are passing (`pytest`).
+- All of the project's tests are passing
 - The `## Implementation Notes` section has been added to the task file.
 
 **Workflow:**

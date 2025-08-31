@@ -16,7 +16,7 @@ Your goal is to have the code-reviewer agent complete a comprehensive code revie
 
 3.  **Validate Definition of Done (DoD) Compliance:**
     *   Carefully read the task file: `backlog/tasks/task-<id> - <title>.md`.
-    *   **Check 1: Tests Passed?** Did the `pytest` command from the previous step complete with 100% success?
+    *   **Check 1: Tests Passed?** Did the project's tests pass successfully?
     *   **Check 2: Implementation Notes?** Does the task file contain the `## Implementation Notes` section? It must be present and provide a reasonable summary of the work done.
     *   **Check 3: Acceptance Criteria?** Are all acceptance criteria checkboxes (`- [ ]`) in the task file marked as completed (`- [x]`)?
 
