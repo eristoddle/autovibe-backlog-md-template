@@ -1,0 +1,16 @@
+{
+  "hooks": [
+    {
+      "event": "after-tool-use",
+      "agent": "code-reviewer",
+      "condition": {
+        "type": "and",
+        "conditions": [
+          { "type": "shell", "command": "[ \"$TOOL_NAME\" = \"Bash\" ]" },
+          { "type": "shell", "command": "echo \"$TOOL_INPUT\" | grep -q 'git commit'" },
+          { "type": "shell", "command": "git diff HEAD~1 HEAD --name-only | grep 'backlog/tasks/.*\\.md' | xargs -r -I {} sh -c 'git show HEAD:\"{}\" | grep -q \"status: Done\" && git show HEAD:\"{}\" | grep -q \"Pending Automated Review\"' && exit 0 || exit 1" }
+        ]
+      }
+    }
+  ]
+}
