@@ -30,10 +30,13 @@ A powerful command-line tool that treats your project tasks as Markdown files li
 ### [Repomix](https://github.com/yamadashy/repomix)
 An intelligent repository packager that creates a single, context-rich file from your entire codebase. This gives AI agents complete project awareness, enabling them to make better architectural decisions and maintain consistency across your codebase.
 
-- 🗂️ Full repository context
-- 🧠 Smart file filtering
+- 🗂️ Full repository context in one file
+- 🧠 Smart file filtering and formatting
 - 📦 Optimized for AI consumption
 - ⚡ Lightning-fast processing
+- 🔄 **Perfect for getting second opinions**: Export your entire project to paste into Google AI Studio, ChatGPT, or any other AI tool for alternative perspectives
+
+**Pro Tip**: Use `repomix` to quickly get architectural reviews or debugging help from different AI models. One command packages your entire project for easy sharing with any AI assistant.
 
 ## 🚀 Getting Started
 
@@ -93,24 +96,58 @@ claude  # or your preferred AI CLI
 
 ### Phase 1+: Autonomous Development 🔄
 
-1. **Break down the work**:
+1. **Break down the work** (Once per phase):
    ```bash
    /breakdown
    ```
-   The AI analyzes your roadmap and creates specific, actionable tasks.
+   The AI analyzes your roadmap and creates specific, actionable tasks for the current phase. **You only run this once at the beginning of each phase to generate all tasks.**
 
-2. **Execute the development cycle**:
+2. **Execute the development cycle** (Repeatedly throughout the phase):
    ```bash
    /nexttask
    ```
-   Watch as the AI:
-   - Picks up tasks autonomously
-   - Writes production-quality code
-   - Implements tests
-   - Handles dependencies
-   - Maintains consistency
+   **Keep running this command throughout the entire phase/sprint.** Each time you run it, the AI will:
+   - Pick up the next available task
+   - Write the necessary code
+   - Run tests
+   - Mark the task complete
+   - Move to the next task
+   
+   **Continue running `/nexttask` until all tasks in the current phase are complete.**
 
-3. **Progress to completion**: Repeat the cycle for each phase until your project is production-ready.
+3. **Move to the next phase**: 
+   - When all tasks are done, run `/breakdown` again to generate tasks for the next phase
+   - Then return to running `/nexttask` repeatedly
+   - Repeat this cycle until your entire project is complete
+
+**The Pattern:**
+```
+Phase 1: /breakdown (once) → /nexttask, /nexttask, /nexttask... (until phase complete)
+Phase 2: /breakdown (once) → /nexttask, /nexttask, /nexttask... (until phase complete)
+Phase 3: /breakdown (once) → /nexttask, /nexttask, /nexttask... (until phase complete)
+```
+
+### Getting Second Opinions 🤔
+
+When you want alternative perspectives or are stuck on a problem:
+
+```bash
+# Generate a complete project snapshot
+repomix
+
+# This creates a single file you can paste into:
+# - Google AI Studio (Gemini)
+# - ChatGPT
+# - Anthropic Console
+# - Any other AI tool
+```
+
+This is invaluable for:
+- Architecture reviews from different AI models
+- Debugging complex issues
+- Getting alternative implementation suggestions
+- Cross-checking security considerations
+- Validating best practices
 
 ## 🎯 Why This Works
 
@@ -171,6 +208,11 @@ MIT - Use this template for any project, commercial or personal.
 ## 🌟 Start Your Next Project
 
 Ready to experience AI-driven development? Click the **["Use this template"](../../generate)** button above to create your own repository and start building!
+
+### Quick Command Reference
+- **`/nexttask`** - Run repeatedly throughout a phase to execute tasks
+- **`/breakdown`** - Run once at the start of each new phase to generate tasks
+- **`repomix`** - Package your project for second opinions from other AI tools
 
 ---
 
