@@ -19,7 +19,7 @@ This isn't just another project template. It's a complete AI-driven development 
 
 ## 🛠️ Core Technologies
 
-### [Backlog.md](https://github.com/PaysanCorrezien/backlog.md)
+### [Backlog.md](https://github.com/MrLesk/Backlog.md)
 A powerful command-line tool that treats your project tasks as Markdown files living directly in your repository. No external task trackers, no context switching - your backlog lives with your code where it belongs.
 
 - 📝 Tasks as markdown files
@@ -76,7 +76,7 @@ claude  # or your preferred AI CLI
    ```bash
    /nexttask
    ```
-   
+
 2. **Describe your vision**: The AI will interview you comprehensively, covering:
    - Core requirements and features
    - Security considerations
@@ -174,6 +174,6 @@ Ready to experience AI-driven development? Click the **["Use this template"](../
 
 ---
 
-**Your journey starts with a single command:** `/nexttask` 
+**Your journey starts with a single command:** `/nexttask`
 
 Let AI turn your idea into reality. 🚀
