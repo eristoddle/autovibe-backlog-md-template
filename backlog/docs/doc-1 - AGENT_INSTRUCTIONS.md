@@ -299,16 +299,6 @@ To ensure code quality and stability, this project uses a feature-branching mode
 
 **Your work on a task is only truly finished when the `code-reviewer` has left a `Review Passed` label on the task.**
 
-### ⚠️ MANDATORY: UI Development Workflow
-
-All UI components for this project **MUST** be created using the **`shadcn-ui` MCP tool**. Do not attempt to build base components (like buttons, cards, tables, etc.) from scratch.
-
-1.  **Technology Stack:** The frontend is built with **React, TypeScript, and Tailwind CSS**.
-2.  **Tool Usage:** When a task requires a new UI component, your first step is to use the `shadcn-ui` tool to add the necessary primitive (e.g., `Card`, `Table`, `Progress`, `Button`).
-3.  **Customization:** After adding the base component with the tool, you will then write the TSX code to customize it, add logic, and compose it into the required feature.
-
-**This is a strict project requirement to ensure UI consistency and maintainability.**
-
 <!-- BACKLOG.MD GUIDELINES END -->
 
 # Important Project Reminders
