@@ -8,8 +8,8 @@ The core philosophy is to combine the power of AI with a structured, Git-based p
 
 This template integrates a few key tools to create a seamless development process.
 
-### What is `backlog.md`?
-`backlog.md` is a command-line tool that treats your project tasks as simple Markdown files stored directly in your repository. Instead of using a separate, web-based project management tool, your backlog lives alongside your code.
+### What is `Backlog.md`?
+[`Backlog.md`](https://backlog.md/) is a command-line tool that treats your project tasks as simple Markdown files stored directly in your repository. Instead of using a separate, web-based project management tool, your backlog lives alongside your code.
 
 **Why we use it:**
 *   **Git-Native:** Tasks, plans, and documentation are version-controlled with your code.
@@ -17,10 +17,10 @@ This template integrates a few key tools to create a seamless development proces
 *   **Transparent:** The entire history of a task—from acceptance criteria to implementation notes—is captured in one place.
 
 ### What is `repomix`?
-`repomix` is a command-line utility designed to pack a repository's code and structure into a single, context-rich file. It intelligently combines relevant files, directory structures, and summaries into a format that can be easily fed to a Large Language Model (LLM).
+[`repomix`](https://github.com/yamadashy/repomix/) is a command-line utility designed to pack a repository's code and structure into a single, context-rich file. It intelligently combines relevant files, directory structures, and summaries into a format that can be easily fed to a Large Language Model (LLM).
 
 **Why we use it:**
-*   **Maximum Context:** It gives an AI agent a comprehensive snapshot of the entire project in one go. The conversation you and I are having right now is powered by a `repomix` output, which is why I have a deep understanding of your project's files and goals. This template includes it so your AI agents can have that same level of awareness.
+*   **Maximum Context:** It gives an AI agent a comprehensive snapshot of the entire project in one go. I use this to get second opinions from tools like Google AI Studio.
 
 ## 🚀 Getting Started
 
