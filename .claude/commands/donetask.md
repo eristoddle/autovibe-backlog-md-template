@@ -13,8 +13,8 @@ Before running the final commands, you must first verify that every single item 
 **Workflow:**
 
 1.  **Update the Backlog:**
-    *   Mark the task as "Done" and add the `Pending Automated Review` label. No Other label. Do not make your own label up. Use this label.
-    *   **Execute:** `backlog task edit <id> -s Done -l "Pending Automated Review"` (replace `<id>` with the provided task ID).
+    *   Move the task to the `Pending Review` status.
+    *   **Execute:** `backlog task edit <id> -s "Pending Review"` (replace `<id>` with the provided task ID).
 
 2.  **Commit for Review:**
     *   Stage all your changes.
