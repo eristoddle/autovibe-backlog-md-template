@@ -23,7 +23,6 @@ SYNC_FILES = [
     "AGENTS.md",
     "CLAUDE.md",
     "GEMINI.md",
-    "README.md",
     "ROO.md",
     "requirements.txt",
     "run_claude_loop.sh",
