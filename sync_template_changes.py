@@ -32,9 +32,6 @@ SYNC_FILES = [
 
     # Dot files and configuration
     ".cursorrules",
-    ".gitignore",
-    ".mcp.json",
-    ".npmrc",
 
     # Claude configuration
     ".claude/settings.local.json",
