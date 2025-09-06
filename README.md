@@ -65,13 +65,23 @@ With a clear, phased roadmap in place, you can now begin the automated developme
     ```
     /breakdown
     ```
-    The AI will read the roadmap it just created, find the first phase, and automatically generate all the necessary implementation tasks.
+    The AI will read the roadmap it just created, find the first phase, and automatically generate all the necessary implementation tasks. When it is done, run the `/clear` command in Claude Code to free up the context:
+
+    ```
+    /clear
+    ```
 
 2.  **Work Through the Tasks:** Now, you enter the main development loop. Simply run the `nexttask` command repeatedly:
     ```
     /nexttask
     ```
     The AI will autonomously pick up the next available task, write code, run tests, submit its work for an automated code review, fix issues, and merge completed features.
+
+    When it is done with one taske, run the `/clear` command in Claude Code to free up the context:
+
+    ```
+    /clear
+    ```
 
 3.  **Repeat for the Next Phase:** Once all the tasks for the current phase are complete, run the `/breakdown` command again to plan the next phase, then re-enter the `/nexttask` loop.
 
