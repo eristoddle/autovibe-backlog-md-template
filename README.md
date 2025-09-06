@@ -8,15 +8,15 @@ The core philosophy is to combine the power of AI with a structured, Git-based p
 
 This template integrates a few key tools to create a seamless development process.
 
-### What is `backlog.md`?
-`backlog.md` is a command-line tool that treats your project tasks as simple Markdown files stored directly in your repository. Instead of using a separate, web-based project management tool, your backlog lives alongside your code.
+### What is [`Backlog.md`](https://github.com/MrLesk/Backlog.md)?
+`Backlog.md` is a command-line tool that treats your project tasks as simple Markdown files stored directly in your repository. Instead of using a separate, web-based project management tool, your backlog lives alongside your code.
 
 **Why we use it:**
 *   **Git-Native:** Tasks, plans, and documentation are version-controlled with your code.
 *   **AI & Human Friendly:** Plain text Markdown is easy for both AI agents and developers to read, parse, and edit.
 *   **Transparent:** The entire history of a task—from acceptance criteria to implementation notes—is captured in one place.
 
-### What is `repomix`?
+### What is [`repomix`](https://github.com/yamadashy/repomix)?
 `repomix` is a command-line utility designed to pack a repository's code and structure into a single, context-rich file. It intelligently combines relevant files, directory structures, and summaries into a format that can be easily fed to a Large Language Model (LLM).
 
 **Why we use it:**
@@ -65,8 +65,8 @@ With a clear, phased roadmap in place, you can now begin the automated developme
     ```
     /breakdown
     ```
-    The AI will read the roadmap it just created, find the first phase, and automatically generate all the necessary implementation tasks. 
-    
+    The AI will read the roadmap it just created, find the first phase, and automatically generate all the necessary implementation tasks.
+
     **💡 Pro Tip:** After each major command completes, run `/clear` to free up context and ensure optimal performance:
     ```
     /clear
@@ -114,7 +114,7 @@ Repeat this cycle—`/breakdown` to plan a phase, `/nexttask` to execute it—un
 The complete workflow uses just these commands:
 
 1. **Project Setup:** `/startproject` → `/clear`
-2. **Phase Planning:** `/breakdown` → `/clear` 
+2. **Phase Planning:** `/breakdown` → `/clear`
 3. **Development Loop:** `/nexttask` → `/clear` (repeat until phase complete)
 4. **Next Phase:** Return to step 2
 
@@ -143,7 +143,7 @@ backlog/
 ## 🚀 Key Features
 
 - **Conversation-First Planning:** No file editing required - just describe your idea
-- **Automated Task Generation:** AI breaks down phases into actionable development tasks  
+- **Automated Task Generation:** AI breaks down phases into actionable development tasks
 - **Intelligent Code Review:** Automated review process with status-based workflow
 - **Git-Native Workflow:** All tasks and documentation are version-controlled
 - **Language Agnostic:** Works with any programming language or framework
