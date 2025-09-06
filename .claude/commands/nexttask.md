@@ -58,8 +58,9 @@ Your goal is to be the primary orchestrator for this project. You must intellige
 3.  **Action:**
     a. Extract the task ID from the file path.
     b. **You MUST be on the correct feature branch before proceeding. Execute:** `git checkout feature/task-<id>`.
-    c. Proceed immediately to implementation to fix the issues based on the failure comments in the task file. **Do not pause.**
-    d. **Upon successful completion of the fix and all local validation, you MUST finalize the task.** To do this, you will **read the instructions in the file `.claude/commands/donetask.md` and execute the shell commands exactly as described within it.** After completing those steps, **stop.**
+    c. **Acknowledge the failure and move the task back to `In Progress`. Execute:** `backlog task edit <id> -s "In Progress" -a @claude`.
+    d. Proceed immediately to implementation to fix the issues based on the failure comments in the task file. **Do not pause.**
+    e. **Upon successful completion of the fix and all local validation, you MUST finalize the task.** To do this, you will **read the instructions in the file `.claude/commands/donetask.md` and execute the shell commands exactly as described within it.** After completing those steps, **stop.**
 
 *(If the condition above is not met, proceed to Priority 4.)*
 

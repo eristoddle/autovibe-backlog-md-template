@@ -288,16 +288,16 @@ To ensure code quality and stability, this project uses a feature-branching mode
 
 **C. Completing a Task (Submitting for Review):**
 1.  Once you believe the task is complete according to the DoD, you **MUST** follow the finalization procedure.
-2.  The procedure is to **read the instructions in the file `.claude/commands/donetask.md` and execute the shell commands exactly as described within it.** This handles updating the backlog and making the final commit that triggers the automated review.
+2.  The procedure is to **read the instructions in the file `.claude/commands/donetask.md` and execute the shell commands exactly as described within it.** This moves the task's status to `Pending Review` and makes the final commit that triggers the automated review.
 
 **D. The Automated Review:**
 1.  The `post-commit` hook will automatically trigger the `code-reviewer` agent.
 2.  The reviewer will run tests and validate your work against the DoD on your feature branch.
-3.  The reviewer will then make a new commit on your branch indicating the outcome:
-    *   **Pass:** The `Pending Automated Review` label will be replaced with `Review Passed`. The branch is now ready for a final human-approved merge into `main`.
-    *   **Fail:** The task status will be reverted to "In Progress," a `Review Failed` label will be added, and a new "FIX" task will be created. You should then begin work on the new "FIX" task on the same feature branch.
+3.  The reviewer will then make a new commit on your branch with a verdict that changes the task's status:
+    *   **Pass:** The task status will be changed from `Pending Review` to `Done`. The branch is now ready for a final merge.
+    *   **Fail:** The task status will be changed to `Failed Review`. The next time the `nexttask` command runs, it will pick up this failed task, move it back to `In Progress`, and begin work on a fix.
 
-**Your work on a task is only truly finished when the `code-reviewer` has left a `Review Passed` label on the task.**
+**Your work on a task is only truly finished when the `code-reviewer` has changed the task status to `Done`.**
 
 <!-- BACKLOG.MD GUIDELINES END -->
 

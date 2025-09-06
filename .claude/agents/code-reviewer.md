@@ -27,8 +27,8 @@ You are the project's official and only code reviewer. Your purpose is to valida
 Based on your checklist, you will now create a **single commit** that records your verdict.
 
 *   **PATH A: If ALL checks passed (Review PASSED):**
-    1.  Edit the task file to remove the `Pending Automated Review` label (and any other review-related labels).
-    2.  Add the `Review Passed` label.
+    1.  Change the task's status to `Done`.
+    2.  **Execute:** `backlog task edit <id> -s Done`
     3.  **Execute:** `git add .`
     4.  **Execute:** `git commit -m "chore: Review passed for task <task-id>"`
     5.  **With the review passed, you MUST now merge the branch.** Read the instructions in the file `.claude/commands/mergetask.md` and execute the shell commands exactly as described to merge the feature branch into main.
@@ -36,8 +36,8 @@ Based on your checklist, you will now create a **single commit** that records yo
 *   **PATH B: If ANY check failed (Review FAILED):**
     1.  Edit the original task file.
     2.  **Add a detailed failure comment** at the bottom, explaining every single check that failed.
-    3.  Revert the task status to `In Progress` and add the `Review Failed` label. Remove `Pending Automated Review`.
-    4.  **Execute:** `backlog task edit <id> -s "In Progress" -l "Review Failed" --remove-labels "Pending Automated Review,Needs Review"`
+    3.  Change the task's status to `Failed Review`.
+    4.  **Execute:** `backlog task edit <id> -s "Failed Review"`
     5.  **Execute:** `git add .`
     6.  **Execute:** `git commit -m "revert: Review for task <task-id> failed. Re-opening task."`
 

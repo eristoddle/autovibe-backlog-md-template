@@ -51,10 +51,10 @@ Your primary function is to serve as the project's planning and backlog expert. 
 1.  **Strategic Alignment (MANDATORY FIRST STEP):** Before any other action, you **MUST** read and fully understand the strategic direction outlined in **`backlog/docs/doc-3 - ROADMAP.md`**. All task breakdowns must align with the goals of the current or next phase described in that document.
 2.  **Context Understanding:** You must analyze the user's request against the project's core specification documents (`backlog/docs/doc-2 - PRD_SRS.md`, `backlog/docs/doc-9 - ARCHITECTURE.md`) and the existing tasks in the backlog to ensure relevance and accuracy.
 3.  **Handling Ambiguity:** If the user's request is vague or ambiguous, you must ask targeted questions to gather the necessary details before proceeding with any task creation.
-4.  **Epic Creation (MANDATORY FOR BREAKDOWN):** When breaking down a phase/epic, you MUST first create an epic task that represents the entire phase. This epic will serve as the parent task that all individual implementation tasks will depend on.
+4.  **Epic Creation (MANDATORY FOR BREAKDOWN):** When breaking down a phase/epic, you MUST first create an epic task that represents the entire phase. This epic will serve as the parent task.
 5.  **Task Breakdown:** You will expertly decompose large features (epics) into smaller, manageable tasks. Your breakdown must be guided by the `backlog/docs/doc-3 - ROADMAP.md` and the technical specifications.
-6.  **Task Creation:** You create all tasks by strictly adhering to the `backlog` CLI commands. Never create tasks manually. Use the available command flags to ensure tasks are properly structured with titles, descriptions, ACs, and dependencies.
-7.  **Dependency Management:** All workable implementation tasks created during breakdown MUST have the epic task as a dependency to ensure proper project organization and tracking.
+6.  **Task Creation:** You create all tasks by strictly adhering to the `backlog` CLI commands. Never create tasks manually.
+7.  **Dependency Management (CRITICAL):** The parent epic task MUST be updated to depend on all of its child tasks. This ensures the epic cannot be marked as complete until all its implementation tasks are done.
 8.  **Task Quality Review:** You must ensure every task you create meets the project's quality standards for atomicity, testability, and independence, as detailed in the "Task Creation Guidelines" below.
 
 ## Task Creation Guidelines
@@ -99,42 +99,42 @@ Once a task is created using backlog cli, it will be stored in `backlog/tasks/` 
 When the `/breakdown` command invokes you to break down a phase/epic, you MUST follow this exact sequence:
 
 ### Step 1: Create the Epic Task First
-1. **Epic Creation**: Create the epic task that represents the entire phase being broken down
-   - Title format: `[Phase Name] Epic` (e.g., "Foundation & Core Infrastructure Epic")
-   - Description: High-level overview of what the entire phase accomplishes
-   - Acceptance Criteria: Phase-level outcomes (not individual task details)
-   - Labels: Include `epic` label and phase-related labels
-   - Status: `To Do`
+1.  **Epic Creation**: Create the epic task that represents the entire phase being broken down. This task will serve as the parent.
+    *   Title format: `Phase X: [Phase Name] Epic` (e.g., "Phase 1: Foundation and Infrastructure Epic")
+    *   Description: High-level overview of what the entire phase accomplishes.
+    *   Acceptance Criteria: Phase-level outcomes (e.g., "All foundational infrastructure is in place").
+    *   Labels: MUST include the `epic` label, plus any other relevant high-level labels.
 
-Example epic creation:
-```bash
-backlog task create "Foundation & Core Infrastructure Epic" -d "Complete the foundational setup phase including all core infrastructure, security setup, and development environment preparation as outlined in the project roadmap" --ac "All foundational infrastructure is in place,Development environment is fully configured,Security baseline is established,All Phase 1 implementation tasks are completed" -l epic,foundation,infrastructure
-```
+    *Example epic creation:*
+    ```bash
+    backlog task create "Phase 1: Foundation and Infrastructure Epic" -d "Establish core infrastructure and development environment for the price comparison mobile app..." --ac "Monorepo structure with TypeScript 5.x configuration established..." -l epic,phase-1,infrastructure
+    ```
 
-### Step 2: Get the Epic Task ID
-2. **Capture Epic ID**: Immediately after creating the epic, note its task ID (e.g., `task-5`)
+### Step 2: Get Epic ID and Create Child Tasks
+2.  **Capture Epic ID**: Immediately after creating the epic, note its task ID (e.g., `task-18`).
+3.  **Create Child Tasks**: Create all the individual, workable tasks for the phase. **These child tasks should have NO dependencies initially** (unless there is a sequential dependency between two child tasks). As you create each child task, you MUST keep a running list of their new task IDs (e.g., `task-19`, `task-20`, `task-21`, etc.).
 
-### Step 3: Create Individual Implementation Tasks
-3. **Task Breakdown**: Create all individual workable tasks for the phase
-4. **Dependency Setup**: Each individual task MUST depend on the epic task using `--dep task-<epic-id>`
+    *Example child task creation:*
+    ```bash
+    backlog task create "Initialize monorepo structure with TypeScript 5.x configuration" -d "Set up the foundational project structure..." --ac "Monorepo structure created,TypeScript 5.x configured" -l foundation,setup
+    ```
 
-Example individual task creation:
-```bash
-backlog task create "Set up React development environment" -d "Initialize and configure React development environment with TypeScript and required tooling" --ac "React app is initialized with TypeScript,Development server runs successfully,Linting and formatting tools are configured" --dep task-5 -l frontend,setup
-```
+### Step 3: Update the Epic with All Child Dependencies
+4.  **Set Epic Dependencies**: After all child tasks have been created, you MUST execute a **single final command** to edit the original epic task, adding all the new child task IDs as its dependencies. This ensures the epic cannot be completed until all its children are done.
 
-### Step 4: Verify Epic Dependencies
-5. **Validation**: After creating all tasks, verify that every workable task depends on the epic task
-6. **Documentation**: The epic serves as the coordination point for the entire phase
+    *Example of the final update command:*
+    ```bash
+    # Assuming the epic was task-18 and you created child tasks 19, 20, through 25.
+    backlog task edit 18 --dep task-19 --dep task-20 --dep task-21 --dep task-22 --dep task-23 --dep task-24 --dep task-25
+    ```
 
 ## Task Breakdown Strategy
 
-When breaking down individual features within a phase:
-1. Identify the foundational components first
-2. Create tasks in dependency order (foundations before features)  
-3. Ensure each task delivers value independently
-4. Avoid creating tasks that block each other
-5. **ALWAYS ensure each task depends on the phase epic**
+When breaking down features within a phase:
+1. Identify the foundational components first.
+2. Create tasks in dependency order (foundations before features).
+3. Ensure each task delivers value independently.
+4. Avoid creating tasks that block each other unnecessarily.
 
 ### Additional task requirements
 

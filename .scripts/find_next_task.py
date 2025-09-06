@@ -60,7 +60,7 @@ def main():
             continue
 
         # 2. Must not be an EPIC
-        if "EPIC" in task_data.get("title", ""):
+        if "epic" in task_data.get("labels", []):
             continue
 
         # 3. Check dependencies

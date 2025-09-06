@@ -23,7 +23,6 @@ SYNC_FILES = [
     "AGENTS.md",
     "CLAUDE.md",
     "GEMINI.md",
-    "README.md",
     "ROO.md",
     "requirements.txt",
     "run_claude_loop.sh",
@@ -32,9 +31,6 @@ SYNC_FILES = [
 
     # Dot files and configuration
     ".cursorrules",
-    ".gitignore",
-    ".mcp.json",
-    ".npmrc",
 
     # Claude configuration
     ".claude/settings.local.json",
@@ -46,6 +42,7 @@ SYNC_FILES = [
     ".claude/commands/codereview.md",
     ".claude/commands/breakdown.md",
     ".claude/commands/nexttask.md",
+    ".claude/commands/startproject.md",
 
     # Scripts
     ".scripts/find_next_task.py",
@@ -57,11 +54,6 @@ SYNC_FILES = [
 
     # Documentation files
     "backlog/docs/doc-1 - AGENT_INSTRUCTIONS.md",
-
-    # Task files
-    "backlog/tasks/task-1 - Define Project Scope and Roadmap.md",
-
-    # Directory structure (empty directories)
 ]
 
 def get_script_dir() -> Path:
