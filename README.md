@@ -65,8 +65,9 @@ With a clear, phased roadmap in place, you can now begin the automated developme
     ```
     /breakdown
     ```
-    The AI will read the roadmap it just created, find the first phase, and automatically generate all the necessary implementation tasks. When it is done, run the `/clear` command in Claude Code to free up the context:
-
+    The AI will read the roadmap it just created, find the first phase, and automatically generate all the necessary implementation tasks. 
+    
+    **💡 Pro Tip:** After each major command completes, run `/clear` to free up context and ensure optimal performance:
     ```
     /clear
     ```
@@ -75,14 +76,82 @@ With a clear, phased roadmap in place, you can now begin the automated developme
     ```
     /nexttask
     ```
-    The AI will autonomously pick up the next available task, write code, run tests, submit its work for an automated code review, fix issues, and merge completed features.
+    The AI will autonomously:
+    - Pick up the next available task
+    - Create a feature branch
+    - Write and test code
+    - Submit work for automated code review
+    - Fix any issues found during review
+    - Complete the task when review passes
 
-    When it is done with one taske, run the `/clear` command in Claude Code to free up the context:
-
+    After each task completion, clear the context for the next task:
     ```
     /clear
     ```
 
-3.  **Repeat for the Next Phase:** Once all the tasks for the current phase are complete, run the `/breakdown` command again to plan the next phase, then re-enter the `/nexttask` loop.
+3.  **Monitor Progress:** Tasks flow through these statuses:
+    - `To Do` → `In Progress` → `Pending Review` → `Done` (success)
+    - Or `Pending Review` → `Failed Review` → `In Progress` (retry after fixes)
+
+4.  **Repeat for the Next Phase:** Once all the tasks for the current phase are complete, run the `/breakdown` command again to plan the next phase, then re-enter the `/nexttask` loop.
 
 Repeat this cycle—`/breakdown` to plan a phase, `/nexttask` to execute it—until your project is complete.
+
+## ❓ Troubleshooting
+
+**"No actionable tasks are ready"**: All tasks in the current phase are complete. Run `/breakdown` to generate tasks for the next phase.
+
+**AI seems slow or unresponsive**: Run `/clear` to free up context and improve performance.
+
+**Task stuck in "Pending Review"**: The automated review process handles this. Wait for the AI reviewer to complete, or check if there are any failed tasks to fix.
+
+**Task moved to "Failed Review"**: This is normal! The next `/nexttask` will automatically pick up the failed task and work on fixes.
+
+**Need to modify the roadmap**: Edit `backlog/docs/doc-3 - ROADMAP.md` directly, then run `/breakdown` to regenerate tasks.
+
+## 📋 Quick Reference
+
+The complete workflow uses just these commands:
+
+1. **Project Setup:** `/startproject` → `/clear`
+2. **Phase Planning:** `/breakdown` → `/clear` 
+3. **Development Loop:** `/nexttask` → `/clear` (repeat until phase complete)
+4. **Next Phase:** Return to step 2
+
+**💡 Why `/clear`?** Each command can generate substantial context. Running `/clear` after each command ensures optimal AI performance and prevents context overflow in longer development sessions.
+
+## 🔧 What Gets Created
+
+When you complete the project setup, your repository will contain:
+
+```
+backlog/
+├── docs/
+│   ├── doc-2 - PRD_SRS.md         # Product & Software Requirements
+│   ├── doc-3 - ROADMAP.md         # Phased Development Plan
+│   ├── doc-9 - ARCHITECTURE.md    # System Design
+│   ├── doc-5 - DATA_MODEL.md      # Database Schema
+│   ├── doc-7 - API.md             # API Specifications
+│   ├── doc-6 - CONFIG.md          # Configuration Requirements
+│   └── doc-8 - BUILD.md           # Build & Deployment
+└── tasks/
+    ├── task-1.md                  # Auto-generated implementation tasks
+    ├── task-2.md                  # (Created by /breakdown command)
+    └── ...                        # Continues as needed
+```
+
+## 🚀 Key Features
+
+- **Conversation-First Planning:** No file editing required - just describe your idea
+- **Automated Task Generation:** AI breaks down phases into actionable development tasks  
+- **Intelligent Code Review:** Automated review process with status-based workflow
+- **Git-Native Workflow:** All tasks and documentation are version-controlled
+- **Language Agnostic:** Works with any programming language or framework
+- **Requirements Preservation:** Technical specifications flow seamlessly from planning to implementation
+
+## 🎯 Perfect For
+
+- **Solo Developers:** Accelerate development with AI pair programming
+- **Startup Teams:** Get from idea to MVP faster with structured planning
+- **Learning Projects:** Understand best practices through AI guidance
+- **Prototyping:** Rapidly build and iterate on new concepts
