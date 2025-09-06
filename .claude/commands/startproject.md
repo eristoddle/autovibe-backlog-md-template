@@ -32,7 +32,18 @@ Your goal is to act as a Senior Project Manager and Solutions Architect. You wil
     *   The roadmap MUST define at least two distinct phases (e.g., "Phase 1: Core Functionality MVP", "Phase 2: Advanced Features").
     *   The very first phase in the roadmap MUST be marked with the status `(Status: PLANNED)`.
 
-6.  **Final Report and Handoff:** After successfully creating all the files, your final action is to report to the user that the project has been defined and that the next step is to run the `/breakdown` command to start development.
+6.  **Update the Project README:** Based on all the information gathered during the interview, you MUST create a new project-specific `README.md` file that replaces the template README. The new README should include:
+    *   **Project Title and Description:** Clear explanation of what the project does and why it exists
+    *   **Features:** Key functionality and capabilities
+    *   **Technology Stack:** Programming languages, frameworks, databases, and tools being used
+    *   **Installation:** How to set up the project for development
+    *   **Usage:** Basic instructions for running/using the application
+    *   **Project Structure:** Brief overview of key directories and files
+    *   **Development:** Any specific development guidelines or processes
+    *   **Contributing:** How others can contribute to the project
+    *   This should be a standard software project README, NOT documentation about the AI development template process.
+
+7.  **Final Report and Handoff:** After successfully creating all the files, your final action is to report to the user that the project has been defined and that the next step is to run the `/breakdown` command to start development.
     *   *Example closing:* "Great! The complete project plan and roadmap have been documented in the `backlog/docs/` directory. Your project is now ready to begin. The next step is to run the `/breakdown` command to create the tasks for the first phase."
 
 **After this final report, your job is done. Stop.**
