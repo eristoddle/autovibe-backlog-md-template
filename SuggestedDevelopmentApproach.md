@@ -28,9 +28,9 @@ I'm implementing QA integration for the autovibe-backlog-md-template project. Pl
 Create .claude/agents/qa-tester.md with capabilities to analyze tasks, determine test requirements, write tests, and handle pass/fail workflow. Reference the existing code-reviewer.md agent for structure.
 ```
 
-### For Tasks 4-6 (Modify existing commands)
+### ~~For Tasks 4-6 (Modify existing commands)~~
 
-These could be grouped since they're all modifications:
+~~These could be grouped since they're all modifications:~~
 
 **New chat with:**
 

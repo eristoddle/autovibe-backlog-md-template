@@ -21,19 +21,32 @@ You are the project's official and only code reviewer. Your purpose is to valida
     *   **Tests Passed?** Did running the project's tests complete with 100% success?
     *   **Implementation Notes?** Does the task file contain the `## Implementation Notes` section?
     *   **Acceptance Criteria?** Are all `- [ ]` checkboxes in the task file marked as `- [x]`?
+3.  **Determine QA Requirements:** Analyze if this task requires QA testing by checking:
+    *   **File Changes:** Look at `git diff --name-only main` to see modified files
+    *   **UI/Frontend Changes:** Files in `src/components/`, `src/pages/`, `public/`, `static/`, or containing CSS/HTML
+    *   **User-Facing Features:** Task description or acceptance criteria mentioning "user", "UI", "interface", "visual", "display"
+    *   **API Endpoints:** New or modified API routes that affect user interaction
+    *   **Mobile/App Changes:** Files in mobile directories or app-specific code
 
 ### 3. Take Action Based on the Verdict (MANDATORY)
 
 Based on your checklist, you will now create a **single commit** that records your verdict.
 
-*   **PATH A: If ALL checks passed (Review PASSED):**
+*   **PATH A: If ALL checks passed AND QA is NOT required (Review PASSED, No QA):**
     1.  Change the task's status to `Done`.
     2.  **Execute:** `backlog task edit <id> -s Done`
     3.  **Execute:** `git add .`
     4.  **Execute:** `git commit -m "chore: Review passed for task <task-id>"`
     5.  **With the review passed, you MUST now merge the branch.** Read the instructions in the file `.claude/commands/mergetask.md` and execute the shell commands exactly as described to merge the feature branch into main.
 
-*   **PATH B: If ANY check failed (Review FAILED):**
+*   **PATH B: If ALL checks passed AND QA IS required (Review PASSED, Route to QA):**
+    1.  Change the task's status to `Pending QA`.
+    2.  **Execute:** `backlog task edit <id> -s "Pending QA"`
+    3.  **Execute:** `git add .`
+    4.  **Execute:** `git commit -m "chore: Review passed for task <task-id>, routing to QA"`
+    5.  **Report:** "Code review passed for task `<id>`. Task routed to QA for testing due to [specific reason: UI changes/user-facing features/API changes]."
+
+*   **PATH C: If ANY check failed (Review FAILED):**
     1.  Edit the original task file.
     2.  **Add a detailed failure comment** at the bottom, explaining every single check that failed.
     3.  Change the task's status to `Failed Review`.
@@ -41,4 +54,4 @@ Based on your checklist, you will now create a **single commit** that records yo
     5.  **Execute:** `git add .`
     6.  **Execute:** `git commit -m "revert: Review for task <task-id> failed. Re-opening task."`
 
-**After successfully creating one of the two commits above, your job is done. Stop.**
+**After successfully creating one of the three commits above, your job is done. Stop.**

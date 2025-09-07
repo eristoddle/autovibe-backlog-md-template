@@ -42,6 +42,18 @@ Your goal is to be the primary orchestrator for this project. You must intellige
 2.  **Condition:** If the above command returns a file path.
 3.  **Action:** Extract the task ID from the file path and **invoke the `code-reviewer` agent to review it.** Then **stop**.
 
+*(If the condition above is not met, proceed to Priority 2.5.)*
+
+---
+### Priority 2.5: QA Check - Process Pending QA
+
+**This step handles Quality Assurance testing for tasks that passed code review.**
+1.  **Find the task file pending QA:**
+    *   **Execute this exact shell command:** `./.scripts/find_qa_task.sh`
+    *   **If the script fails, you MUST STOP** and report the error.
+2.  **Condition:** If the above command returns a file path.
+3.  **Action:** Extract the task ID from the file path and **invoke the `qa-tester` agent to test it.** Then **stop**.
+
 *(If the condition above is not met, proceed to Priority 3.)*
 
 ---
@@ -60,6 +72,26 @@ Your goal is to be the primary orchestrator for this project. You must intellige
     b. **You MUST be on the correct feature branch before proceeding. Execute:** `git checkout feature/task-<id>`.
     c. **Acknowledge the failure and move the task back to `In Progress`. Execute:** `backlog task edit <id> -s "In Progress" -a @claude`.
     d. Proceed immediately to implementation to fix the issues based on the failure comments in the task file. **Do not pause.**
+    e. **Upon successful completion of the fix and all local validation, you MUST finalize the task.** To do this, you will **read the instructions in the file `.claude/commands/donetask.md` and execute the shell commands exactly as described within it.** After completing those steps, **stop.**
+
+*(If the condition above is not met, proceed to Priority 3.5.)*
+
+---
+### Priority 3.5: Failed QA Check - Prioritize Failed QA
+
+**This step ensures that QA failures are fixed before any new work begins.**
+
+1.  **Find the task file with failed QA:**
+    *   **Execute this exact shell command:** `./.scripts/find_failed_qa_task.sh`
+    *   **If the script fails, you MUST STOP** and report the error.
+
+2.  **Condition:** If the above command returns a file path.
+
+3.  **Action:**
+    a. Extract the task ID from the file path.
+    b. **You MUST be on the correct feature branch before proceeding. Execute:** `git checkout feature/task-<id>`.
+    c. **Acknowledge the QA failure and move the task back to `In Progress`. Execute:** `backlog task edit <id> -s "In Progress" -a @claude`.
+    d. Proceed immediately to implementation to fix the QA issues based on the failure comments in the task file. **Do not pause.**
     e. **Upon successful completion of the fix and all local validation, you MUST finalize the task.** To do this, you will **read the instructions in the file `.claude/commands/donetask.md` and execute the shell commands exactly as described within it.** After completing those steps, **stop.**
 
 *(If the condition above is not met, proceed to Priority 4.)*
