@@ -52,6 +52,7 @@ SYNC_FILES = [
     ".scripts/find_failed_task.sh",
     ".scripts/find_qa_task.sh",
     ".scripts/find_failed_qa_task.sh",
+    ".scripts/priority_checker.sh",
 
     # Backlog structure
     "backlog/config.yml",

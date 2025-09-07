@@ -1,119 +1,92 @@
 # Command: nexttask - Intelligently resume or start the next task
 
-Your goal is to be the primary orchestrator for this project. You must intelligently assess the project's current state and take the single most appropriate next action to keep the work flowing. You will follow a strict, non-negotiable priority checklist. **Execute the first step that matches the project's state, then stop.**
+Your goal is to be the primary orchestrator for this project. You must intelligently assess the project's current state and take the single most appropriate next action to keep the work flowing. You will use a unified priority checker script, then execute the appropriate action.
 
-**--- WORKFLOW PRIORITY CHECKLIST ---**
+**--- SIMPLIFIED WORKFLOW ---**
 
-### Priority 1: State Check - Resume and Complete Incomplete Task
+### Step 1: Check Priority Actions
 
-**This is the highest priority. It handles the "session timed out" scenario by intelligently resuming work.**
+Execute the priority checker script to determine what action is needed:
 
-1.  **Detection:**
-    *   Check for an active task: `backlog task list -s "In Progress" --plain`.
-    *   Check for uncommitted work: `git status --porcelain`.
+```bash
+./.scripts/priority_checker.sh
+```
 
-2.  **Condition:** If there is exactly one task "In Progress" AND the `git status` is NOT empty.
+**The script will return one of these results:**
+- `RESUME:<task-id>` - Resume incomplete work
+- `REVIEW:<task-id>` - Process pending review  
+- `QA:<task-id>` - Process pending QA
+- `FIX:<task-id>` - Fix failed review
+- `FIXQA:<task-id>` - Fix failed QA
+- *(no output)* - Ready for new work
 
-3.  **Action (if condition met):** This indicates a previously interrupted task. You **must** now assess, complete, and submit this task.
-    a. **Identify and Prepare:**
-        i. Extract the task ID from the `backlog list` command output.
-        ii. The work is on a feature branch. **Execute:** `git checkout feature/task-<id>` to ensure you are in the correct context.
+### Step 2: Execute Based on Result
 
-    b. **Analyze and Validate (MANDATORY):**
-        i. **Read the requirements:** Read the entire task file (`backlog/tasks/task-<id> - <title>.md`), paying close attention to every single `## Acceptance Criteria`.
-        ii. **Read the incomplete code:** Read the contents of all the uncommitted files shown by `git status`.
-        iii. **Compare and decide:** Analyze the incomplete code and determine if it already satisfies **ALL** acceptance criteria and meets the full Definition of Done (DoD).
+**A. RESUME Action:**
+If the script returns `RESUME:<task-id>`:
+1. Extract the task ID from the result.
+2. Switch to the feature branch: `git checkout feature/task-<id>`
+3. Read the task file (`backlog/tasks/task-<id> - <title>.md`) and analyze all acceptance criteria.
+4. Read all uncommitted files to understand the current state.
+5. Determine if work is complete or needs continuation.
+6. If complete, finalize using `.claude/commands/donetask.md` instructions.
+7. If incomplete, continue implementation until all acceptance criteria are met, then finalize.
 
-    c. **Execute Based on Validation:**
-        *   **PATH A: If your analysis confirms the work IS ALREADY COMPLETE:** The session likely timed out just before submission. **You will now finalize the task.**
-        *   **PATH B: If your analysis shows the work IS INCOMPLETE:** You must now **resume implementation**. Continue coding and modifying the files to meet all remaining acceptance criteria. Once you have finished the work and verified it locally, **you will then finalize the task.**
+**B. REVIEW Action:**
+If the script returns `REVIEW:<task-id>`:
+1. Extract the task ID from the result.
+2. Invoke the `code-reviewer` agent to review the task.
+3. **Stop** after invoking the reviewer.
 
-    d. **Finalization (MANDATORY):** To finalize the task, you will **read the instructions in the file `.claude/commands/donetask.md` and execute the shell commands exactly as described within it.** After completing those steps, your job is complete. **Stop.**
+**C. QA Action:**
+If the script returns `QA:<task-id>`:
+1. Extract the task ID from the result.
+2. Invoke the `qa-tester` agent to test the task.
+3. **Stop** after invoking the tester.
 
-*(If the condition in step 2 is not met, proceed to Priority 2.)*
+**D. FIX Action:**
+If the script returns `FIX:<task-id>`:
+1. Extract the task ID from the result.
+2. Switch to the feature branch: `git checkout feature/task-<id>`
+3. Move task back to "In Progress": `backlog task edit <id> -s "In Progress" -a @claude`
+4. Read the failure comments in the task file to understand what needs fixing.
+5. Implement the necessary fixes to address all failure points.
+6. When fixes are complete and validated, finalize using `.claude/commands/donetask.md` instructions.
 
----
-### Priority 2: Review Check - Process Pending Reviews
+**E. FIXQA Action:**
+If the script returns `FIXQA:<task-id>`:
+1. Extract the task ID from the result.
+2. Switch to the feature branch: `git checkout feature/task-<id>`
+3. Move task back to "In Progress": `backlog task edit <id> -s "In Progress" -a @claude`
+4. Read the QA failure comments in the task file to understand what needs fixing.
+5. Implement the necessary fixes to address all QA failure points.
+6. When fixes are complete and validated, finalize using `.claude/commands/donetask.md` instructions.
 
-**This step serves as the primary review process for the project.**
-1.  **Find the task file pending review:**
-    *   **Execute this exact shell command:** `./.scripts/find_review_task.sh`
-    *   **If the script fails, you MUST STOP** and report the error.
-2.  **Condition:** If the above command returns a file path.
-3.  **Action:** Extract the task ID from the file path and **invoke the `code-reviewer` agent to review it.** Then **stop**.
+**F. NEW WORK (No Output):**
+If the script returns no output:
+1. Find the next actionable task: `python .scripts/find_next_task.py`
+2. If a task file is returned:
+   - Extract task ID from the filename
+   - Create feature branch: `git checkout main && git pull && git checkout -b feature/task-<id>`
+   - Move to "In Progress": `backlog task edit <id> -s "In Progress" -a @claude`
+   - Implement the task according to its acceptance criteria
+   - Finalize using `.claude/commands/donetask.md` instructions
+3. If no task file is returned:
+   - Report: "No actionable tasks are ready. All remaining tasks are blocked by dependencies."
+   - **Stop**
 
-*(If the condition above is not met, proceed to Priority 2.5.)*
+### Key Benefits of This Approach:
 
----
-### Priority 2.5: QA Check - Process Pending QA
+1. **Single Source of Truth:** All priority logic is centralized in the shell script
+2. **Faster Execution:** Shell script runs all checks efficiently in one pass
+3. **Easier Maintenance:** Changes to priority logic only need to be made in one place
+4. **Better Error Handling:** Shell script can handle edge cases and errors uniformly
+5. **Cleaner AI Logic:** The AI focuses on implementation rather than state checking
+6. **Future-Proof:** Easy to add new workflow steps by extending the priority checker
 
-**This step handles Quality Assurance testing for tasks that passed code review.**
-1.  **Find the task file pending QA:**
-    *   **Execute this exact shell command:** `./.scripts/find_qa_task.sh`
-    *   **If the script fails, you MUST STOP** and report the error.
-2.  **Condition:** If the above command returns a file path.
-3.  **Action:** Extract the task ID from the file path and **invoke the `qa-tester` agent to test it.** Then **stop**.
+### Technical Notes:
 
-*(If the condition above is not met, proceed to Priority 3.)*
-
----
-### Priority 3: Fix Check - Prioritize Failed Reviews
-
-**This step ensures that broken code is fixed before any new work begins.**
-
-1.  **Find the task file with a failed review:**
-    *   **Execute this exact shell command:** `./.scripts/find_failed_task.sh`
-    *   **If the script fails, you MUST STOP** and report the error.
-
-2.  **Condition:** If the above command returns a file path.
-
-3.  **Action:**
-    a. Extract the task ID from the file path.
-    b. **You MUST be on the correct feature branch before proceeding. Execute:** `git checkout feature/task-<id>`.
-    c. **Acknowledge the failure and move the task back to `In Progress`. Execute:** `backlog task edit <id> -s "In Progress" -a @claude`.
-    d. Proceed immediately to implementation to fix the issues based on the failure comments in the task file. **Do not pause.**
-    e. **Upon successful completion of the fix and all local validation, you MUST finalize the task.** To do this, you will **read the instructions in the file `.claude/commands/donetask.md` and execute the shell commands exactly as described within it.** After completing those steps, **stop.**
-
-*(If the condition above is not met, proceed to Priority 3.5.)*
-
----
-### Priority 3.5: Failed QA Check - Prioritize Failed QA
-
-**This step ensures that QA failures are fixed before any new work begins.**
-
-1.  **Find the task file with failed QA:**
-    *   **Execute this exact shell command:** `./.scripts/find_failed_qa_task.sh`
-    *   **If the script fails, you MUST STOP** and report the error.
-
-2.  **Condition:** If the above command returns a file path.
-
-3.  **Action:**
-    a. Extract the task ID from the file path.
-    b. **You MUST be on the correct feature branch before proceeding. Execute:** `git checkout feature/task-<id>`.
-    c. **Acknowledge the QA failure and move the task back to `In Progress`. Execute:** `backlog task edit <id> -s "In Progress" -a @claude`.
-    d. Proceed immediately to implementation to fix the QA issues based on the failure comments in the task file. **Do not pause.**
-    e. **Upon successful completion of the fix and all local validation, you MUST finalize the task.** To do this, you will **read the instructions in the file `.claude/commands/donetask.md` and execute the shell commands exactly as described within it.** After completing those steps, **stop.**
-
-*(If the condition above is not met, proceed to Priority 4.)*
-
----
-### Priority 4: New Work - Find and Start an Actionable Task
-
-**This is the "happy path" for starting fresh work.**
-
-1.  **Find the Next Ready Task:**
-    *   **Execute the trusted Python script to find the file path of the next actionable task:**
-        ```bash
-        python .scripts/find_next_task.py
-        ```
-    *   Store the output of this script. It will either be a single file path or empty.
-
-2.  **Take Action Based on the Result:**
-    *   **If the script returned a file path:**
-        a. This file path is your target task. Extract the task ID from the filename.
-        b. Create a new feature branch: `git checkout main && git pull && git checkout -b feature/task-<id>`.
-        c. Move the task to "In Progress": `backlog task edit <id> -s "In Progress" -a @claude`.
-        d. **Continue without interruption** to the implementation phase, starting with the `## Implementation Plan`.
-        e. Upon successful completion, you **must** finalize the task. To do this, you will **read the instructions in the file `.claude/commands/donetask.md` and execute the shell commands exactly as described within it.** After completing those steps, **stop.**
-    *   **If the script returned no output:**
-        a. You **must stop** and report: "No actionable tasks are ready. All remaining tasks are blocked by dependencies."
+- The priority checker script uses existing helper scripts for consistency
+- All task ID extraction is standardized across priority types
+- Error handling is built into the script with appropriate exit codes
+- The script follows the established priority order from the original workflow
