@@ -33,11 +33,12 @@ You are the project's official and only code reviewer. Your purpose is to valida
 Based on your checklist, you will now create a **single commit** that records your verdict.
 
 *   **PATH A: If ALL checks passed AND QA is NOT required (Review PASSED, No QA):**
-    1.  Change the task's status to `Done`.
-    2.  **Execute:** `backlog task edit <id> -s Done`
-    3.  **Execute:** `git add .`
-    4.  **Execute:** `git commit -m "chore: Review passed for task <task-id>"`
-    5.  **With the review passed, you MUST now merge the branch.** Read the instructions in the file `.claude/commands/mergetask.md` and execute the shell commands exactly as described to merge the feature branch into main.
+    1.  **Document QA Determination:** Add a `## QA Review` section to the task file explaining why QA was not required (e.g., "No QA required: Task only involved test coverage verification for existing functionality" or "No QA required: Backend-only changes with no user-facing impact").
+    2.  Change the task's status to `Done`.
+    3.  **Execute:** `backlog task edit <id> -s Done`
+    4.  **Execute:** `git add .`
+    5.  **Execute:** `git commit -m "chore: Review passed for task <task-id>"`
+    6.  **With the review passed, you MUST now merge the branch.** Read the instructions in the file `.claude/commands/mergetask.md` and execute the shell commands exactly as described to merge the feature branch into main.
 
 *   **PATH B: If ALL checks passed AND QA IS required (Review PASSED, Route to QA):**
     1.  Change the task's status to `Pending QA`.
