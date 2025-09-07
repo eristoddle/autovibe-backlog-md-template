@@ -37,9 +37,11 @@ SYNC_FILES = [
     ".claude/hooks.json",
     ".claude/agents/code-reviewer.md",
     ".claude/agents/project-manager-backlog.md",
+    ".claude/agents/qa-tester.md",
     ".claude/commands/mergetask.md",
     ".claude/commands/donetask.md",
     ".claude/commands/codereview.md",
+    ".claude/commands/qatask.md",
     ".claude/commands/breakdown.md",
     ".claude/commands/nexttask.md",
     ".claude/commands/startproject.md",
@@ -48,6 +50,8 @@ SYNC_FILES = [
     ".scripts/find_next_task.py",
     ".scripts/find_review_task.sh",
     ".scripts/find_failed_task.sh",
+    ".scripts/find_qa_task.sh",
+    ".scripts/find_failed_qa_task.sh",
 
     # Backlog structure
     "backlog/config.yml",
@@ -160,7 +164,7 @@ def main():
         epilog=__doc__
     )
 
-    group = parser.add_mutually_exclusive_group(required=True)
+    group = parser.add_mutually_exclusive_group(required=False)
     group.add_argument(
         "--update-from",
         type=str,
@@ -190,10 +194,13 @@ def main():
         print("Files that will be synced:")
         for file_path in sorted(SYNC_FILES):
             if file_path.endswith('/'):
-                print(f"=� {file_path}")
+                print(f"📁 {file_path}")
             else:
-                print(f"=� {file_path}")
+                print(f"📄 {file_path}")
         return
+
+    if not args.update_from and not args.update_to:
+        parser.error("Must specify either --update-from or --update-to (unless using --list-files)")
 
     try:
         if args.update_from:
