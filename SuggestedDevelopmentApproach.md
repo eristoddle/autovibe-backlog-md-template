@@ -1,11 +1,11 @@
 ## Suggested Approach
 
-### For Tasks 1-2 (Configuration & Scripts)
+### ~~For Tasks 1-2 (Configuration & Scripts)~~
 
-These are small and related. You could do them together in one session:
+~~These are small and related. You could do them together in one session:~~
 
-- Task 1: Update Core Configuration
-- Task 2: Create QA Detection Scripts
+- ~~Task 1: Update Core Configuration~~
+- ~~Task 2: Create QA Detection Scripts~~
 
 **Start a new chat with:**
 

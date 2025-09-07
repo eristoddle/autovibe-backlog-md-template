@@ -1,6 +1,6 @@
 project_name: "autovibe"
 default_status: "To Do"
-statuses: ["To Do", "In Progress", "Pending Review", "Failed Review", "Done"]
+statuses: ["To Do", "In Progress", "Pending Review", "Failed Review", "Pending QA", "Failed QA", "Done"]
 labels: []
 milestones: []
 date_format: yyyy-mm-dd
