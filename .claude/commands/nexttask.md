@@ -9,7 +9,8 @@ Your goal is to be the primary orchestrator for this project. You must intellige
 Execute the priority checker script to determine what action is needed:
 
 ```bash
-./.scripts/priority_checker.sh
+result=$(./.scripts/priority_checker.sh)
+exit_code=$?
 ```
 
 **The script will return one of these results:**
@@ -20,17 +21,21 @@ Execute the priority checker script to determine what action is needed:
 - `FIXQA:<task-id>` - Fix failed QA
 - *(no output)* - Ready for new work
 
+**Important**: If the result contains malformed output (like `RESUME:No tasks found`), treat it as "no output" and proceed to new work.
+
 ### Step 2: Execute Based on Result
 
 **A. RESUME Action:**
-If the script returns `RESUME:<task-id>`:
-1. Extract the task ID from the result.
-2. Switch to the feature branch: `git checkout feature/task-<id>`
-3. Read the task file (`backlog/tasks/task-<id> - <title>.md`) and analyze all acceptance criteria.
-4. Read all uncommitted files to understand the current state.
-5. Determine if work is complete or needs continuation.
-6. If complete, finalize using `.claude/commands/donetask.md` instructions.
-7. If incomplete, continue implementation until all acceptance criteria are met, then finalize.
+If the script returns `RESUME:<task-id>` where `<task-id>` is a valid task identifier (like `task-2.3`):
+1. Extract the task ID from the result (everything after the colon).
+2. Validate the task ID format matches `task-X` or `task-X.Y` pattern.
+3. If the task ID is invalid (like "No tasks found"), treat this as "no output" and go to step F.
+4. Switch to the feature branch: `git checkout feature/task-<id>`
+5. Read the task file (`backlog/tasks/task-<id> - <title>.md`) and analyze all acceptance criteria.
+6. Read all uncommitted files to understand the current state.
+7. Determine if work is complete or needs continuation.
+8. If complete, finalize using `.claude/commands/donetask.md` instructions.
+9. If incomplete, continue implementation until all acceptance criteria are met, then finalize.
 
 **B. REVIEW Action:**
 If the script returns `REVIEW:<task-id>`:

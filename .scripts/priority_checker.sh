@@ -27,7 +27,8 @@ check_git_status() {
 }
 
 get_in_progress_task() {
-    backlog task list -s "In Progress" --plain 2>/dev/null | head -n 1 || true
+    # Get the actual task line (skip the header "In Progress:") and trim whitespace
+    backlog task list -s "In Progress" --plain 2>/dev/null | sed -n '2p' | sed 's/^[[:space:]]*//' || true
 }
 
 # --- Priority 1: Resume Incomplete Work ---
@@ -41,9 +42,10 @@ check_resume_work() {
     # Must have exactly one task in progress AND uncommitted changes
     if [[ -n "$in_progress_task" && -n "$git_status" ]]; then
         local task_id
-        # Extract task ID from the backlog output (format: "task-X.Y - Title")
+        # Extract task ID from standard backlog.md format: "task-X - Title"
         task_id=$(echo "$in_progress_task" | sed -E 's/^(task-[0-9]+(\.[0-9]+)*) - .*/\1/')
-        if [[ -n "$task_id" ]]; then
+        # Validate that we got a proper task ID
+        if [[ "$task_id" =~ ^task-[0-9]+(\.[0-9]+)*$ ]]; then
             echo "RESUME:$task_id"
             return 0
         fi
