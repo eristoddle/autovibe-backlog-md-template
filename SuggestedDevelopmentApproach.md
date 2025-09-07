@@ -16,11 +16,11 @@ Task 1: Update Core Configuration - Modify backlog/config.yml to add new statuse
 Task 2: Create QA Detection Scripts - Create .scripts/find_qa_task.sh and .scripts/find_failed_qa_task.sh
 ```
 
-### For Task 3 (QA Tester Agent)
+### ~~For Task 3 (QA Tester Agent)~~
 
-This is complex and deserves its own session.
+~~This is complex and deserves its own session.~~
 
-**New chat with:**
+~~**~~New chat with:**
 
 ```
 I'm implementing QA integration for the autovibe-backlog-md-template project. Please complete Task 3: Create QA Tester Agent from the AutoVibeTemplateQAIntegration.md document. The project is at /Users/stmiller/Library/CloudStorage/Dropbox/python/autovibe-backlog-md-template
