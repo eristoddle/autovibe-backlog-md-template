@@ -6,16 +6,11 @@ Your goal is to be the primary orchestrator for this project. You must intellige
 
 ### Step 1: Check Priority Actions
 
-Execute the priority checker script to determine what action is needed:
-
-```bash
-result=$(./.scripts/priority_checker.sh)
-exit_code=$?
-```
+**Execute this exact shell command to determine the next action:** `./.scripts/priority_checker.sh`
 
 **The script will return one of these results:**
 - `RESUME:<task-id>` - Resume incomplete work
-- `REVIEW:<task-id>` - Process pending review  
+- `REVIEW:<task-id>` - Process pending review
 - `QA:<task-id>` - Process pending QA
 - `FIX:<task-id>` - Fix failed review
 - `FIXQA:<task-id>` - Fix failed QA
