@@ -2,6 +2,10 @@
 
 Your goal is to be the primary orchestrator for this project. You must intelligently assess the project's current state and take the single most appropriate next action to keep the work flowing. You will use a unified priority checker script, then execute the appropriate action.
 
+**--- CRITICAL INSTRUCTION FOR SCRIPT HANDLING ---**
+
+The `./.scripts/priority_checker.sh` script is designed to return output ONLY if a priority action (Resume, Review, Fix, etc.) is found. If it finds no priority actions, it will return **no output** and may exit with a non-zero status code.
+
 **--- SIMPLIFIED WORKFLOW ---**
 
 ### Step 1: Check Priority Actions
